@@ -22,6 +22,7 @@ public:
     void gotMessage(ofMessage msg);
     
     ofImage testPlant;
+    ofImage ground;
     int delay;
 		
 };
