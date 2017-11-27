@@ -23,6 +23,8 @@ public:
     
     ofImage testPlant;
     ofImage ground;
+    string plantedCarrot;
+    vector<ofPoint> carrots;
     int delay;
 		
 };
