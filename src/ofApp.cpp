@@ -5,8 +5,10 @@ void ofApp::setup(){
     // BUG: flicker
     ofSetBackgroundAuto(false);
     
+    ofSetBackgroundColor(154, 231, 252);
+    
     // Load image and set anchorpoint
-    testPlant.load("images/testplant.png");
+    testPlant.load("images/carrot.png");
     testPlant.setAnchorPoint(testPlant.getWidth()/2, testPlant.getHeight()/2);
     
     ground.load("images/ground.png");
@@ -54,7 +56,7 @@ void ofApp::mousePressed(int x, int y, int button){
     ofLog() << "xpos: " << x << " ypos: " << y;
     
     // Set delay before drawing plant
-    // ofSleepMillis(delay);
+//    ofSleepMillis(delay);
     
     // draws plant at pressed position
     testPlant.draw(x, ofGetHeight() - ground.getHeight());
