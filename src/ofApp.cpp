@@ -23,8 +23,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    for(int i = 0; i < ofGetScreenWidth(); i += ground.getWidth()){
-        ground.draw(i, ofGetScreenHeight() );
+    for(int i = 0; i < ofGetWidth(); i += ground.getWidth()){
+        ground.draw(i, ofGetHeight() );
     }
 }
 
@@ -57,7 +57,7 @@ void ofApp::mousePressed(int x, int y, int button){
     // ofSleepMillis(delay);
     
     // draws plant at pressed position
-    testPlant.draw(x, y);
+    testPlant.draw(x, ofGetHeight() - ground.getHeight());
 }
 
 //--------------------------------------------------------------
