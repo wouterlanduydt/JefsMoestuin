@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include <math.h>
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -10,6 +11,8 @@ void ofApp::setup(){
     
     ground.load("images/ground.png");
     ground.setAnchorPoint(0, ground.getHeight());
+    
+    testSprite.load("images/testSprite.png");
     
     // set delay after click
     delay = 3000;
@@ -32,6 +35,10 @@ void ofApp::draw(){
         testPlant.draw(carrots[i]);
         ofLog() << carrots[i];
     }
+    
+    
+    
+    testSprite.drawSubsection(200, 200, 108, 140, 108, 0);
     
 }
 
