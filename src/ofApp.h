@@ -26,5 +26,4 @@ public:
     string plantedCarrot;
     vector<ofPoint> carrots;
     int delay;
-		
 };

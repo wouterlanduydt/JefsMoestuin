@@ -2,10 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    // BUG: flicker
     ofSetBackgroundColor(154, 231, 252);
     
-    // Load image and set anchorpoint
+    // Load images and set anchorpoint
     testPlant.load("images/carrot.png");
     testPlant.setAnchorPoint(testPlant.getWidth()/2, testPlant.getHeight()/2);
     
@@ -25,7 +24,7 @@ void ofApp::update(){
 void ofApp::draw(){
     ofSetBackgroundColor(154, 231, 252);
     
-    for(int i = 0; i < ofGetWidth(); i += ground.getWidth()){
+    for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
         ground.draw(i, ofGetHeight() );
     }
     // for every object in Vector carrots, draw a carrot
@@ -62,7 +61,7 @@ void ofApp::mousePressed(int x, int y, int button){
     ofLog() << "xpos: " << x << " ypos: " << y;
     
     // Set delay before drawing plant
-//    ofSleepMillis(delay);
+//     ofSleepMillis(delay);
     
     // draws plant at pressed position
     carrots.push_back(ofPoint(x, ofGetHeight() - ground.getHeight()));
