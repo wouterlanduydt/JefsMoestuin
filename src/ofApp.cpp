@@ -16,11 +16,12 @@ void ofApp::setup(){
     
     // set delay after click
     delay = 3000;
+    loopPosition = 0;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    
 }
 
 //--------------------------------------------------------------
@@ -36,10 +37,16 @@ void ofApp::draw(){
         ofLog() << carrots[i];
     }
     
-    
-    
-    testSprite.drawSubsection(200, 200, 108, 140, 108, 0);
-    
+    if (loopPosition < 6) {
+        loopPosition++;
+    } else if (loopPosition > 5) {
+        loopPosition = 0;
+    }
+   testSprite.drawSubsection(400, 200, 108, 140, 108*loopPosition, 0);
+}
+
+void ofApp::drawSprite() {
+   
 }
 
 //--------------------------------------------------------------
@@ -68,14 +75,14 @@ void ofApp::mousePressed(int x, int y, int button){
     ofLog() << "xpos: " << x << " ypos: " << y;
     
     // Set delay before drawing plant
-//     ofSleepMillis(delay);
+    //ofSleepMillis(delay);
     
     // draws plant at pressed position
     carrots.push_back(ofPoint(x, ofGetHeight() - ground.getHeight()));
     
     // Timestamp plant created
     plantedCarrot = ofGetTimestampString();
-    ofLog() << plantedCarrot;
+    // ofLog() << plantedCarrot;
     
 }
 
