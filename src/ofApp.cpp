@@ -5,36 +5,43 @@
 void ofApp::setup(){
     ofSetBackgroundColor(154, 231, 252);
     
-    // Load images and set anchorpoint
-    testPlant.load("images/carrot.png");
-    testPlant.setAnchorPoint(testPlant.getWidth()/2, testPlant.getHeight()/2);
+    kinect.init(true);
+    kinect.open();
+    kinect.setCameraTiltAngle(10);
+    if(kinect.isConnected()) {
+        ofLog() << "kinect connected";
+    }
     
+    ofSetFrameRate(10);
+    
+    carrot.load("images/carrot.png");
+    tomato.load("images/tomato.png");
+    radish.load("images/radish.png");
+    parsnip.load("images/parsnip.png");
+    salad.load("images/salad.png");
+    testSprite.load("images/testSprite.png");
     ground.load("images/ground.png");
     ground.setAnchorPoint(0, ground.getHeight());
     
-    testSprite.load("images/testSprite.png");
-    
-    // set delay after click
-    delay = 3000;
     loopPosition = 0;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+    kinect.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    // kinect.draw(0.0, 0.0);
     ofSetBackgroundColor(154, 231, 252);
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
         ground.draw(i, ofGetHeight() );
     }
-    // for every object in Vector carrots, draw a carrot
-    for (int i = 0; i < carrots.size(); i++) {
-        testPlant.draw(carrots[i]);
-        ofLog() << carrots[i];
+        
+    for (int i = 0; i < vegetables.size(); i++) {
+        vegetables[i]->draw();
     }
     
     if (loopPosition < 6) {
@@ -42,16 +49,23 @@ void ofApp::draw(){
     } else if (loopPosition > 5) {
         loopPosition = 0;
     }
-   testSprite.drawSubsection(400, 200, 108, 140, 108*loopPosition, 0);
-}
 
-void ofApp::drawSprite() {
-   
+    // testSprite.drawSubsection(400, 200, 108, 140, 108 * loopPosition, 0);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    if (key == 'c'){
+        vegetables.push_back(new Vegetable(carrot, mouseX));
+    } else if (key == 't'){
+        vegetables.push_back(new Vegetable(tomato, mouseX));
+    } else if (key == 's'){
+        vegetables.push_back(new Vegetable(salad, mouseX));
+    } else if (key == 'r'){
+        vegetables.push_back(new Vegetable(radish, mouseX));
+    } else if (key == 'p'){
+        vegetables.push_back(new Vegetable(parsnip, mouseX));
+    }
 }
 
 //--------------------------------------------------------------
@@ -71,18 +85,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    // Log clicked x and y position.
-    ofLog() << "xpos: " << x << " ypos: " << y;
-    
-    // Set delay before drawing plant
-    //ofSleepMillis(delay);
-    
-    // draws plant at pressed position
-    carrots.push_back(ofPoint(x, ofGetHeight() - ground.getHeight()));
-    
-    // Timestamp plant created
-    plantedCarrot = ofGetTimestampString();
-    // ofLog() << plantedCarrot;
     
 }
 

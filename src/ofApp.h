@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxKinect.h"
+
+#include "Vegetable.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -24,11 +27,15 @@ public:
     
     int loopPosition;
     
-    ofImage testPlant;
+    ofImage carrot;
+    ofImage parsnip;
+    ofImage radish;
+    ofImage salad;
+    ofImage tomato;
     ofImage ground;
+    
+    vector<Vegetable *> vegetables;
+    
     ofImage testSprite;
-    int spriteValue;
-    string plantedCarrot;
-    vector<ofPoint> carrots;
-    int delay;
+    ofxKinect kinect;
 };
