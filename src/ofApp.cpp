@@ -12,14 +12,14 @@ void ofApp::setup(){
         ofLog() << "kinect connected";
     }
     
-    ofSetFrameRate(10);
+    ofSetFrameRate(60);
     
     carrot.load("images/carrot.png");
     tomato.load("images/tomato.png");
     radish.load("images/radish.png");
     parsnip.load("images/parsnip.png");
     salad.load("images/salad.png");
-    testSprite.load("images/testSprite.png");
+    carrotSprite.load("images/carrot_sprite.png");
     ground.load("images/ground.png");
     ground.setAnchorPoint(0, ground.getHeight());
     
@@ -44,27 +44,27 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
-    if (loopPosition < 6) {
-        loopPosition++;
-    } else if (loopPosition > 5) {
-        loopPosition = 0;
-    }
+//    if (loopPosition < 3) {
+//        loopPosition++;
+//    } else if (loopPosition == 3) {
+//        loopPosition = 0;
+//    }
 
-    // testSprite.drawSubsection(400, 200, 108, 140, 108 * loopPosition, 0);
+    // carrotSprite.drawSubsection(0, 0, carrotSprite.getWidth()/4, carrotSprite.getHeight(), carrotSprite.getWidth()/4 * loopPosition, 0);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == 'c'){
-        vegetables.push_back(new Vegetable(carrot, mouseX));
+        vegetables.push_back(new Vegetable(carrot, mouseX, ofGetElapsedTimeMillis()));
     } else if (key == 't'){
-        vegetables.push_back(new Vegetable(tomato, mouseX));
+        vegetables.push_back(new Vegetable(tomato, mouseX, ofGetElapsedTimeMillis()));
     } else if (key == 's'){
-        vegetables.push_back(new Vegetable(salad, mouseX));
+        vegetables.push_back(new Vegetable(salad, mouseX, ofGetElapsedTimeMillis()));
     } else if (key == 'r'){
-        vegetables.push_back(new Vegetable(radish, mouseX));
+        vegetables.push_back(new Vegetable(radish, mouseX, ofGetElapsedTimeMillis()));
     } else if (key == 'p'){
-        vegetables.push_back(new Vegetable(parsnip, mouseX));
+        vegetables.push_back(new Vegetable(parsnip, mouseX, ofGetElapsedTimeMillis()));
     }
 }
 

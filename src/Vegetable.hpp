@@ -12,16 +12,18 @@
 #include "ofMain.h"
 
 class Vegetable {
-    public:
-        void draw();
-
-    ofImage image;
-    int xPos;
-    
-    Vegetable(ofImage vegetableToDraw, int xPosToDraw){
+public:
+    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt){
         image = vegetableToDraw;
         xPos = xPosToDraw;
+        timePlanted = plantedAt;
     };
+    
+    void draw();
+    
+    ofImage image;
+    int xPos;
+    float timePlanted;
 };
 
 #endif /* Vegetable_hpp */

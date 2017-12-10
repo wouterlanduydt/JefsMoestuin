@@ -23,7 +23,6 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void drawSprite();
     
     int loopPosition;
     
@@ -35,7 +34,7 @@ public:
     ofImage ground;
     
     vector<Vegetable *> vegetables;
-    
-    ofImage testSprite;
+        
+    ofImage carrotSprite;
     ofxKinect kinect;
 };
