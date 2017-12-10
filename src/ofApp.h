@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxKinect.h"
+
+#include "Vegetable.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -20,10 +23,19 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void drawSprite();
     
-    ofImage testPlant;
+    int loopPosition;
+    
+    ofImage carrot;
+    ofImage parsnip;
+    ofImage radish;
+    ofImage salad;
+    ofImage tomato;
     ofImage ground;
-    string plantedCarrot;
-    vector<ofPoint> carrots;
-    int delay;
+    
+    vector<Vegetable *> vegetables;
+    
+    ofImage testSprite;
+    ofxKinect kinect;
 };
