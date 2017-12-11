@@ -13,17 +13,25 @@
 
 class Vegetable {
 public:
-    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt){
+    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt, int frames){
         image = vegetableToDraw;
         xPos = xPosToDraw;
         timePlanted = plantedAt;
+        totalFrames = frames;
+        spriteDivide = frames + 1;
     };
     
     void draw();
+    void setup();
+    
+    int totalFrames;
+    int spriteDivide;
+    int loopPosition;
     
     ofImage image;
     int xPos;
     float timePlanted;
+    float timeLastFrameIncrement;
 };
 
 #endif /* Vegetable_hpp */

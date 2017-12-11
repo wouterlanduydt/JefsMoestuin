@@ -14,16 +14,14 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     
-    carrot.load("images/carrot.png");
-    tomato.load("images/tomato.png");
-    radish.load("images/radish.png");
-    parsnip.load("images/parsnip.png");
-    salad.load("images/salad.png");
-    carrotSprite.load("images/carrot_sprite.png");
+    carrot.load("images/carrot_sprite.png");
+    tomato.load("images/tomato_sprite.png");
+    radish.load("images/radish_sprite.png");
+    parsnip.load("images/parsnip_sprite.png");
+    salad.load("images/salad_sprite.png");
+    
     ground.load("images/ground.png");
     ground.setAnchorPoint(0, ground.getHeight());
-    
-    loopPosition = 0;
 }
 
 //--------------------------------------------------------------
@@ -33,7 +31,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    // kinect.draw(0.0, 0.0);
+//    kinect.draw(0.0, 0.0);
     ofSetBackgroundColor(154, 231, 252);
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
@@ -43,28 +41,28 @@ void ofApp::draw(){
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
     }
-    
+
 //    if (loopPosition < 3) {
 //        loopPosition++;
 //    } else if (loopPosition == 3) {
 //        loopPosition = 0;
 //    }
-
-    // carrotSprite.drawSubsection(0, 0, carrotSprite.getWidth()/4, carrotSprite.getHeight(), carrotSprite.getWidth()/4 * loopPosition, 0);
+//
+//     carrotSprite.drawSubsection(0, 0, carrotSprite.getWidth()/4, carrotSprite.getHeight(), carrotSprite.getWidth()/4 * loopPosition, 0);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == 'c'){
-        vegetables.push_back(new Vegetable(carrot, mouseX, ofGetElapsedTimeMillis()));
+        vegetables.push_back(new Vegetable(carrot, mouseX, ofGetElapsedTimeMillis(), 3));
     } else if (key == 't'){
-        vegetables.push_back(new Vegetable(tomato, mouseX, ofGetElapsedTimeMillis()));
+        vegetables.push_back(new Vegetable(tomato, mouseX, ofGetElapsedTimeMillis(), 2));
     } else if (key == 's'){
-        vegetables.push_back(new Vegetable(salad, mouseX, ofGetElapsedTimeMillis()));
+        vegetables.push_back(new Vegetable(salad, mouseX, ofGetElapsedTimeMillis(), 3));
     } else if (key == 'r'){
-        vegetables.push_back(new Vegetable(radish, mouseX, ofGetElapsedTimeMillis()));
+        vegetables.push_back(new Vegetable(radish, mouseX, ofGetElapsedTimeMillis(), 2));
     } else if (key == 'p'){
-        vegetables.push_back(new Vegetable(parsnip, mouseX, ofGetElapsedTimeMillis()));
+        vegetables.push_back(new Vegetable(parsnip, mouseX, ofGetElapsedTimeMillis(), 5));
     }
 }
 

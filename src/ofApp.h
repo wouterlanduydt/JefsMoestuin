@@ -24,8 +24,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    int loopPosition;
-    
     ofImage carrot;
     ofImage parsnip;
     ofImage radish;
@@ -34,7 +32,6 @@ public:
     ofImage ground;
     
     vector<Vegetable *> vegetables;
-        
-    ofImage carrotSprite;
+    
     ofxKinect kinect;
 };
