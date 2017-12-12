@@ -31,14 +31,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-//    kinect.draw(0.0, 0.0);
-    ofSetBackgroundColor(154, 231, 252);
+    // kinect.draw(0.0, 0.0);
+    
+    // make the sky darker after 17:00.
+    // TODO: Look for a way to animate the color values.
+    if(ofGetHours() >= 17) {
+        ofSetBackgroundColor(50, 120, 150);
+    } else {
+        ofSetBackgroundColor(196, 236, 255);
+    }
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
         ground.draw(i, ofGetHeight() / 3);
     }
-    
-    ofLog() << ofGetHeight();
     
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
@@ -61,51 +66,8 @@ void ofApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    vegetables.clear();
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-    
+    if (x >= ofGetWidth() - 50 && y >= ofGetHeight() - 50) {
+        vegetables.clear();
+    }
 }
