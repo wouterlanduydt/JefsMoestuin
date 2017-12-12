@@ -21,7 +21,7 @@ void ofApp::setup(){
     salad.load("images/salad_sprite.png");
     
     ground.load("images/ground.png");
-    ground.setAnchorPoint(0, ground.getHeight());
+    ground.setAnchorPoint(0, 70);
 }
 
 //--------------------------------------------------------------
@@ -35,20 +35,14 @@ void ofApp::draw(){
     ofSetBackgroundColor(154, 231, 252);
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
-        ground.draw(i, ofGetHeight() );
+        ground.draw(i, ofGetHeight() / 3);
     }
-        
+    
+    ofLog() << ofGetHeight();
+    
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
     }
-
-//    if (loopPosition < 3) {
-//        loopPosition++;
-//    } else if (loopPosition == 3) {
-//        loopPosition = 0;
-//    }
-//
-//     carrotSprite.drawSubsection(0, 0, carrotSprite.getWidth()/4, carrotSprite.getHeight(), carrotSprite.getWidth()/4 * loopPosition, 0);
 }
 
 //--------------------------------------------------------------
@@ -83,7 +77,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
+    vegetables.clear();
 }
 
 //--------------------------------------------------------------
