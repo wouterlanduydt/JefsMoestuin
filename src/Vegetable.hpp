@@ -13,10 +13,11 @@
 
 class Vegetable {
 public:
-    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt, int frames){
+    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt, int frames, int speed){
         image = vegetableToDraw;
         xPos = xPosToDraw;
         timePlanted = plantedAt;
+        growSpeed = speed;
         totalFrames = frames;
         spriteDivide = frames + 1;
     };
@@ -27,6 +28,7 @@ public:
     int totalFrames;
     int spriteDivide;
     int loopPosition;
+    int growSpeed;
     
     ofImage image;
     int xPos;

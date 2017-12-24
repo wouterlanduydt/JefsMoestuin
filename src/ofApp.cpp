@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include <math.h>
+#include "Vegetable.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,7 +15,7 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     
-    carrot.load("images/carrot_sprite.png");
+    carrot.load("images/carrot_sprite-ae.png");
     tomato.load("images/tomato_sprite.png");
     radish.load("images/radish_sprite.png");
     parsnip.load("images/parsnip_sprite.png");
@@ -22,6 +23,11 @@ void ofApp::setup(){
     
     ground.load("images/ground.png");
     ground.setAnchorPoint(0, 70);
+    
+    plantSeedSound.load("sounds/plant-seed.mp3");
+    bgSound.load("sounds/bg-sound.mp3");
+    bgSound.play();
+    bgSound.setLoop(true);
 }
 
 //--------------------------------------------------------------
@@ -53,15 +59,20 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == 'c'){
-        vegetables.push_back(new Vegetable(carrot, mouseX, ofGetElapsedTimeMillis(), 3));
+        plantSeedSound.play();
+        vegetables.push_back(new Vegetable(carrot, mouseX, ofGetElapsedTimeMillis(), 298, ofRandom(1000, 3000)));
     } else if (key == 't'){
-        vegetables.push_back(new Vegetable(tomato, mouseX, ofGetElapsedTimeMillis(), 2));
+        plantSeedSound.play();
+        vegetables.push_back(new Vegetable(tomato, mouseX, ofGetElapsedTimeMillis(), 2, ofRandom(1000, 3000)));
     } else if (key == 's'){
-        vegetables.push_back(new Vegetable(salad, mouseX, ofGetElapsedTimeMillis(), 3));
+        plantSeedSound.play();
+        vegetables.push_back(new Vegetable(salad, mouseX, ofGetElapsedTimeMillis(), 3, ofRandom(1000, 3000)));
     } else if (key == 'r'){
-        vegetables.push_back(new Vegetable(radish, mouseX, ofGetElapsedTimeMillis(), 2));
+        plantSeedSound.play();
+        vegetables.push_back(new Vegetable(radish, mouseX, ofGetElapsedTimeMillis(), 2, ofRandom(1000, 3000)));
     } else if (key == 'p'){
-        vegetables.push_back(new Vegetable(parsnip, mouseX, ofGetElapsedTimeMillis(), 5));
+        plantSeedSound.play();
+        vegetables.push_back(new Vegetable(parsnip, mouseX, ofGetElapsedTimeMillis(), 5, ofRandom(1000, 3000)));
     }
 }
 

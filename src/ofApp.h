@@ -22,6 +22,9 @@ public:
     ofImage tomato;
     ofImage ground;
     
+    ofSoundPlayer plantSeedSound;
+    ofSoundPlayer bgSound;
+    
     vector<Vegetable *> vegetables;
     
     ofxKinect kinect;
