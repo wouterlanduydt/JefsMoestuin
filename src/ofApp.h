@@ -22,6 +22,12 @@ public:
     int mappedFiducialXpos;
     int mappedFiducialYpos;
     
+    float vegetableZeroPlantedTime;
+    float vegetableOnePlantedTime;
+    float vegetableTwoPlantedTime;
+    float vegetableThreePlantedTime;
+    float vegetableFourPlantedTime;
+    
     int threshold;
     bool bLearnBakground;
     bool backgroundSubOn;
