@@ -34,6 +34,8 @@ public:
     bool debugMode;
     bool muted;
     
+    ofImage indicator;
+    
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage grayDiff;

@@ -32,6 +32,7 @@ void ofApp::setup(){
     
     ofSetFrameRate(24);
     
+    indicator.load("images/indicator.png");
     carrot.load("images/carrot_sprite.png");
     tomato.load("images/tomato_sprite.png");
     radish.load("images/radish_sprite.png");
@@ -152,6 +153,11 @@ void ofApp::draw(){
             fiducial->draw( 0, 0 );//draw fiducial
             fiducial->drawCorners( 0, 0 );//draw corners
             cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
+        }
+        
+        if (fiducial->getId()) {
+            indicator.setAnchorPoint(indicator.getWidth() / 2, indicator.getHeight() / 2);
+            indicator.draw(mappedFiducialXpos, 10);
         }
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
