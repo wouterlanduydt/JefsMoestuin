@@ -33,7 +33,7 @@ void ofApp::setup(){
     ofSetFrameRate(24);
     
     indicator.load("images/indicator.png");
-    carrot.load("images/carrot_sprite.png");
+    carrot.load("images/carrot.png");
     leek.load("images/leek.png");
     radish.load("images/radish.png");
     parsnip.load("images/parsnip.png");
@@ -215,12 +215,7 @@ void ofApp::keyPressed(int key){
         } else if (muted == true) {
             muted = false;
         }
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    if (x >= ofGetWidth() - 50 && y >= ofGetHeight() - 50) {
+    } else if ( key == 'c' ) {
         vegetables.clear();
     }
 }

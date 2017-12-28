@@ -17,7 +17,6 @@ public:
     void draw();
     
     void keyPressed(int key);
-    void mousePressed(int x, int y, int button);
     
     int mappedFiducialXpos;
     int mappedFiducialYpos;
