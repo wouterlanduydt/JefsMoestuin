@@ -45,7 +45,7 @@ public:
     ofImage parsnip;
     ofImage radish;
     ofImage salad;
-    ofImage tomato;
+    ofImage leek;
     ofImage ground;
     
     ofSoundPlayer plantSeedSound;
