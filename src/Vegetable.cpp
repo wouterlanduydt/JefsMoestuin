@@ -8,12 +8,9 @@
 #include "Vegetable.hpp"
 
 void Vegetable::draw() {
-    if (loopPosition < totalFrames) {
-        if (ofGetElapsedTimeMillis() > timePlanted + growSpeed) {
-            loopPosition++;
-            timePlanted = ofGetElapsedTimeMillis();
-        }
-    }
-    image.setAnchorPoint(image.getWidth() / spriteDivide / 2, image.getHeight() / 3);
-    image.drawSubsection(xPos, ofGetHeight() / 3, image.getWidth() / spriteDivide, image.getHeight(), image.getWidth() / spriteDivide * loopPosition, 0);
+    video.setAnchorPoint(video.getWidth()*scale / 2, video.getHeight()*scale / 2);
+    video.draw(xPos, ofGetHeight() / 3, video.getWidth()*scale, video.getHeight()*scale);
+    video.setSpeed(growSpeed);
+    video.play();
+    video.setLoopState(OF_LOOP_NONE);
 }

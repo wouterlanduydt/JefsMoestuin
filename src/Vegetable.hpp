@@ -13,27 +13,24 @@
 
 class Vegetable {
 public:
-    Vegetable(ofImage vegetableToDraw, int xPosToDraw, float plantedAt, int frames, int speed){
-        image = vegetableToDraw;
+    Vegetable(ofVideoPlayer vegetableToDraw, int xPosToDraw){
+        video = vegetableToDraw;
         xPos = xPosToDraw;
-        timePlanted = plantedAt;
-        growSpeed = speed;
-        totalFrames = frames;
-        spriteDivide = frames + 1;
+        timePlanted = ofGetElapsedTimeMillis();
+        growSpeed = ofRandom(.2, .3);
+        scale = ofRandom(.5, 1);
     };
     
     void draw();
     void setup();
     
-    int totalFrames;
-    int spriteDivide;
-    int loopPosition;
-    int growSpeed;
+    float test;
+    float growSpeed;
+    float scale;
     
-    ofImage image;
+    ofVideoPlayer video;
     int xPos;
     float timePlanted;
-    float timeLastFrameIncrement;
 };
 
 #endif /* Vegetable_hpp */

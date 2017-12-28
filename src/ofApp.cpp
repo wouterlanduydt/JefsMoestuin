@@ -33,17 +33,15 @@ void ofApp::setup(){
     ofSetFrameRate(24);
     
     indicator.load("images/indicator.png");
-    carrot.load("images/carrot.png");
-    leek.load("images/leek.png");
-    radish.load("images/radish.png");
-    parsnip.load("images/parsnip.png");
-    salad.load("images/salad.png");
-
-    testVideo.load("video/videoTest.mov");
-    testVideo.setLoopState(OF_LOOP_NONE);
+    
+    carrotVideo.load("video/carrot.mov");
+    leekVideo.load("video/leek.mov");
+    radishVideo.load("video/radish.mov");
+    parsnipVideo.load("video/parsnip.mov");
+    saladVideo.load("video/salad.mov");
     
     ground.load("images/ground.png");
-    ground.setAnchorPoint(0, 70);
+    ground.setAnchorPoint(0, 0);
     
     plantSeedSound.load("sounds/plant-seed.mp3");
     bgSound.load("sounds/bg-sound.mp3");
@@ -53,12 +51,14 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if (kinect.isConnected()) {
-        kinect.update();
-    } else {
-       vidGrabber.update();
-    }
-    testVideo.update();
+    
+    kinect.isConnected() ? kinect.update() : vidGrabber.update();
+    
+    carrotVideo.update();
+    leekVideo.update();
+    radishVideo.update();
+    parsnipVideo.update();
+    saladVideo.update();
     
     if (kinect.isFrameNew() && kinect.isConnected()){
         
@@ -72,11 +72,7 @@ void ofApp::update(){
         }
         
         // take the abs value of the difference between background and incoming and then threshold:
-        if (backgroundSubOn) {
-            grayDiff.absDiff( grayBg, grayImage );
-        } else {
-            grayDiff = grayImage;
-        }
+        backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
         grayDiff.threshold(threshold);
         fidfinder.findFiducials( grayDiff );
         
@@ -92,11 +88,7 @@ void ofApp::update(){
         }
         
         // take the abs value of the difference between background and incoming and then threshold:
-        if (backgroundSubOn) {
-            grayDiff.absDiff( grayBg, grayImage );
-        } else {
-            grayDiff = grayImage;
-        }
+        backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
         grayDiff.threshold(threshold);
         fidfinder.findFiducials( grayDiff );
     }
@@ -112,13 +104,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    // make the sky darker after 17:00.
-    // TODO: Look for a way to animate the color values.
-    if(ofGetHours() <= 17) {
-        ofSetBackgroundColor(240, 247, 246);
-    } else {
-        ofSetBackgroundColor(21, 48, 36);
-    }
+    ofGetHours() <= 17 ? ofSetBackgroundColor(240, 247, 246) : ofSetBackgroundColor(21, 48, 36);
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
         ground.draw(i, ofGetHeight() / 3);
@@ -128,16 +114,13 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
-    if (debugMode == true && kinect.isConnected()) {
+    if (debugMode && kinect.isConnected()) {
         colorImg.draw(0,0);
         grayDiff.draw(640,0);
-    } else if (debugMode == true){
+    } else if (debugMode){
         colorImg.draw(0,0);
         grayDiff.draw(320,0);
     }
-    testVideo.draw(10, 100, 70, 120);
-    testVideo.setSpeed(.2);
-    testVideo.play();
     
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
@@ -156,32 +139,32 @@ void ofApp::draw(){
             cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
         }
         
-        indicator.setAnchorPoint(indicator.getWidth() / 2, indicator.getHeight() / 2);
+        indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(carrot, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(carrotVideo, mappedFiducialXpos));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
             
         } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(leek, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(leekVideo, mappedFiducialXpos));
             vegetableOnePlantedTime = ofGetElapsedTimeMillis();
             
         } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(salad, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(saladVideo, mappedFiducialXpos));
             vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
             
         } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(radish, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(radishVideo, mappedFiducialXpos));
             vegetableThreePlantedTime = ofGetElapsedTimeMillis();
             
         } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(parsnip, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(parsnipVideo, mappedFiducialXpos));
             vegetableFourPlantedTime = ofGetElapsedTimeMillis();
         }
     }
@@ -200,19 +183,9 @@ void ofApp::keyPressed(int key){
     } else if( key == 'b' ) {
         backgroundSubOn = false;
     } else if( key == 'd' ) {
-        if (debugMode == false) {
-            ofLog() << "debug mode ON";
-            debugMode = true;
-        } else if (debugMode == true) {
-            ofLog() << "debug mode OFF";
-            debugMode = false;
-        }
+        debugMode ? debugMode = false : debugMode = true;
     } else if( key == 'm' ) {
-        if (muted == false) {
-            muted = true;
-        } else if (muted == true) {
-            muted = false;
-        }
+        muted ? muted = false : muted = true;
     } else if ( key == 'c' ) {
         vegetables.clear();
     }

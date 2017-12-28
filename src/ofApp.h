@@ -51,8 +51,12 @@ public:
     ofSoundPlayer plantSeedSound;
     ofSoundPlayer bgSound;
     
-    ofVideoPlayer testVideo;
-    
+    ofVideoPlayer carrotVideo;
+    ofVideoPlayer parsnipVideo;
+    ofVideoPlayer radishVideo;
+    ofVideoPlayer saladVideo;
+    ofVideoPlayer leekVideo;
+
     vector<Vegetable *> vegetables;
     
     ofxKinect kinect;
