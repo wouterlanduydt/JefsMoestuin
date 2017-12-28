@@ -156,10 +156,8 @@ void ofApp::draw(){
             cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
         }
         
-        if (fiducial->getId()) {
-            indicator.setAnchorPoint(indicator.getWidth() / 2, indicator.getHeight() / 2);
-            indicator.draw(mappedFiducialXpos, 10);
-        }
+        indicator.setAnchorPoint(indicator.getWidth() / 2, indicator.getHeight() / 2);
+        indicator.draw(mappedFiducialXpos, 10);
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
