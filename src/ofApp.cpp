@@ -7,14 +7,24 @@ void ofApp::setup(){
     kinect.init();
     kinect.open();
     kinect.setCameraTiltAngle(0);
-    if(kinect.isConnected()) {
+
+    if (kinect.isConnected()) {
         ofLog() << "kinect connected";
+        
+        colorImg.allocate(640, 480);
+        grayImage.allocate(640, 480);
+        grayBg.allocate(640, 480);
+        grayDiff.allocate(640, 480);
+        
+    } else {
+        ofLog() << "kinect not connected";
+        
+        vidGrabber.initGrabber(320, 240);
+        colorImg.allocate(320, 240);
+        grayImage.allocate(320, 240);
+        grayBg.allocate(320, 240);
+        grayDiff.allocate(320, 240);
     }
-    
-    colorImg.allocate(640, 480);
-    grayImage.allocate(640, 480);
-    grayBg.allocate(640, 480);
-    grayDiff.allocate(640, 480);
     
     threshold = 100;
     bLearnBakground = true;
@@ -41,12 +51,36 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    kinect.update();
+    if (kinect.isConnected()) {
+        kinect.update();
+    } else {
+       vidGrabber.update();
+    }
     testVideo.update();
     
-    if (kinect.isFrameNew()){
+    if (kinect.isFrameNew() && kinect.isConnected()){
         
         colorImg.setRoiFromPixels(kinect.getPixels().getData(), 640, 480);
+        grayImage = colorImg;
+        
+        if (bLearnBakground == true){
+            grayBg = grayImage;        // the = sign copys the pixels from grayImage into grayBg (operator overloading)
+            bLearnBakground = false;
+            backgroundSubOn = true;
+        }
+        
+        // take the abs value of the difference between background and incoming and then threshold:
+        if (backgroundSubOn) {
+            grayDiff.absDiff( grayBg, grayImage );
+        } else {
+            grayDiff = grayImage;
+        }
+        grayDiff.threshold(threshold);
+        fidfinder.findFiducials( grayDiff );
+        
+    } else if (vidGrabber.isFrameNew()){
+        
+        colorImg.setRoiFromPixels(vidGrabber.getPixels().getData(), 320, 240);
         grayImage = colorImg;
         
         if (bLearnBakground == true){
@@ -84,20 +118,31 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
-//    colorImg.draw(0,0);
+    if (debugMode == true) {
+        colorImg.draw(0,0);
+        grayDiff.draw(320,0);
     
-    testVideo.draw(10, 100, 70, 120);
-    testVideo.setSpeed(.2);
-    testVideo.play();
+//        testVideo.draw(10, 100, 70, 120);
+//        testVideo.setSpeed(.2);
+//        testVideo.play();
+    }
     
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
-        mappedFiducialXpos = ofMap(fiducial->getX(), 0, 640, 0, ofGetWidth());
-        mappedFiducialYpos = ofMap(fiducial->getY(), 0, 480, 0, ofGetHeight());
-        fiducial->draw( 0, 0 );//draw fiducial
-        fiducial->drawCorners( 0, 0 );//draw corners
-        cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
+        if (kinect.isConnected()) {
+            mappedFiducialXpos = ofMap(fiducial->getX(), 0, 640, 0, ofGetWidth());
+            mappedFiducialYpos = ofMap(fiducial->getY(), 0, 480, 0, ofGetHeight());
+        } else {
+            mappedFiducialXpos = ofMap(fiducial->getX(), 0, 320, 0, ofGetWidth());
+            mappedFiducialYpos = ofMap(fiducial->getY(), 0, 240, 0, ofGetHeight());
+        }
+        
+        if (debugMode == true) {
+            fiducial->draw( 0, 0 );//draw fiducial
+            fiducial->drawCorners( 0, 0 );//draw corners
+            cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
+        }
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
@@ -133,12 +178,21 @@ void ofApp::keyPressed(int key){
         bLearnBakground = true;
     } else if( key == '-' ) {
         threshold = max( 0, threshold-1 );
+        ofLog() << threshold;
     } else if( key == '+' || key == '=' ) {
         threshold = min( 255, threshold+1 );
+        ofLog() << threshold;
     } else if( key == 'b' ) {
         backgroundSubOn = false;
+    } else if( key == 'd' ) {
+        if (debugMode == false) {
+            ofLog() << "debug mode ON";
+            debugMode = true;
+        } else if (debugMode == true) {
+            ofLog() << "debug mode OFF";
+            debugMode = false;
+        }
     }
-    ofLog() << threshold;
 }
 
 //--------------------------------------------------------------

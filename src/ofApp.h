@@ -31,6 +31,7 @@ public:
     int threshold;
     bool bLearnBakground;
     bool backgroundSubOn;
+    bool debugMode;
     
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
@@ -54,5 +55,6 @@ public:
     vector<Vegetable *> vegetables;
     
     ofxKinect kinect;
+    ofVideoGrabber vidGrabber;
     ofxFiducialTracker fidfinder;
 };
