@@ -38,6 +38,7 @@ void ofApp::setup(){
     radish.load("images/radish_sprite.png");
     parsnip.load("images/parsnip_sprite.png");
     salad.load("images/salad_sprite.png");
+
     testVideo.load("video/videoTest.mov");
     testVideo.setLoopState(OF_LOOP_NONE);
     
@@ -162,27 +163,27 @@ void ofApp::draw(){
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(carrot, mappedFiducialXpos, ofGetElapsedTimeMillis(), 298, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(carrot, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
             
-        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() > vegetableOnePlantedTime + 5000){
+        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(tomato, mappedFiducialXpos, ofGetElapsedTimeMillis(), 2, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(leek, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
             vegetableOnePlantedTime = ofGetElapsedTimeMillis();
             
-        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() > vegetableTwoPlantedTime + 5000){
+        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(salad, mappedFiducialXpos, ofGetElapsedTimeMillis(), 3, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(salad, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
             vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
             
-        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() > vegetableThreePlantedTime + 5000){
+        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(radish, mappedFiducialXpos, ofGetElapsedTimeMillis(), 2, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(radish, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
             vegetableThreePlantedTime = ofGetElapsedTimeMillis();
             
-        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() > vegetableFourPlantedTime + 5000){
+        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(parsnip, mappedFiducialXpos, ofGetElapsedTimeMillis(), 5, ofRandom(1000, 3000)));
+            vegetables.push_back(new Vegetable(parsnip, mappedFiducialXpos, ofGetElapsedTimeMillis(), 0, ofRandom(1000, 3000)));
             vegetableFourPlantedTime = ofGetElapsedTimeMillis();
         }
     }

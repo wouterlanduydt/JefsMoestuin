@@ -34,8 +34,6 @@ public:
     bool debugMode;
     bool muted;
     
-    ofImage indicator;
-    
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage grayDiff;
@@ -47,8 +45,10 @@ public:
     ofImage parsnip;
     ofImage radish;
     ofImage salad;
-    ofImage tomato;
+    ofImage leek;
     ofImage ground;
+    ofImage tomato;
+    ofImage indicator;
     
     ofSoundPlayer plantSeedSound;
     ofSoundPlayer bgSound;
