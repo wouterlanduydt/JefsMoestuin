@@ -98,6 +98,14 @@ void ofApp::update(){
         grayDiff.threshold(threshold);
         fidfinder.findFiducials( grayDiff );
     }
+    
+    if (muted == true) {
+        bgSound.setVolume(0);
+        plantSeedSound.setVolume(0);
+    } else {
+        bgSound.setVolume(1);
+        plantSeedSound.setVolume(1);
+    }
 }
 
 //--------------------------------------------------------------
@@ -193,6 +201,12 @@ void ofApp::keyPressed(int key){
         } else if (debugMode == true) {
             ofLog() << "debug mode OFF";
             debugMode = false;
+        }
+    } else if( key == 'm' ) {
+        if (muted == false) {
+            muted = true;
+        } else if (muted == true) {
+            muted = false;
         }
     }
 }

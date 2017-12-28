@@ -32,6 +32,7 @@ public:
     bool bLearnBakground;
     bool backgroundSubOn;
     bool debugMode;
+    bool muted;
     
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
