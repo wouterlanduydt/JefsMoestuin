@@ -27,12 +27,12 @@ void ofApp::setup(){
     }
     
     threshold = 100;
-    bLearnBakground = true;
+    bLearnBakground = false;
     backgroundSubOn = false;
     
     ofSetFrameRate(24);
     
-    carrot.load("images/carrot_sprite-ae.png");
+    carrot.load("images/carrot_sprite.png");
     tomato.load("images/tomato_sprite.png");
     radish.load("images/radish_sprite.png");
     parsnip.load("images/parsnip_sprite.png");
@@ -104,10 +104,10 @@ void ofApp::update(){
 void ofApp::draw(){
     // make the sky darker after 17:00.
     // TODO: Look for a way to animate the color values.
-    if(ofGetHours() >= 17) {
-        ofSetBackgroundColor(50, 120, 150);
+    if(ofGetHours() <= 17) {
+        ofSetBackgroundColor(240, 247, 246);
     } else {
-        ofSetBackgroundColor(196, 236, 255);
+        ofSetBackgroundColor(21, 48, 36);
     }
     
     for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
@@ -118,14 +118,16 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
-    if (debugMode == true) {
+    if (debugMode == true && kinect.isConnected()) {
+        colorImg.draw(0,0);
+        grayDiff.draw(640,0);
+    } else if (debugMode == true){
         colorImg.draw(0,0);
         grayDiff.draw(320,0);
-    
-//        testVideo.draw(10, 100, 70, 120);
-//        testVideo.setSpeed(.2);
-//        testVideo.play();
     }
+    testVideo.draw(10, 100, 70, 120);
+    testVideo.setSpeed(.2);
+    testVideo.play();
     
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
