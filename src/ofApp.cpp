@@ -34,10 +34,10 @@ void ofApp::setup(){
     
     indicator.load("images/indicator.png");
     carrot.load("images/carrot_sprite.png");
-    tomato.load("images/tomato_sprite.png");
-    radish.load("images/radish_sprite.png");
-    parsnip.load("images/parsnip_sprite.png");
-    salad.load("images/salad_sprite.png");
+    leek.load("images/leek.png");
+    radish.load("images/radish.png");
+    parsnip.load("images/parsnip.png");
+    salad.load("images/salad.png");
 
     testVideo.load("video/videoTest.mov");
     testVideo.setLoopState(OF_LOOP_NONE);
