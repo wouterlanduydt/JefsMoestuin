@@ -11,22 +11,22 @@ void ofApp::setup(){
     if (kinect.isConnected()) {
         ofLog() << "kinect connected";
         
-        colorImg.allocate(640, 480);
-        grayImage.allocate(640, 480);
-        grayBg.allocate(640, 480);
-        grayDiff.allocate(640, 480);
+        colorImg.allocate(kinect.getWidth(), kinect.getHeight());
+        grayImage.allocate(kinect.getWidth(), kinect.getHeight());
+        grayBg.allocate(kinect.getWidth(), kinect.getHeight());
+        grayDiff.allocate(kinect.getWidth(), kinect.getHeight());
         
     } else {
         ofLog() << "kinect not connected";
         
         vidGrabber.initGrabber(320, 240);
-        colorImg.allocate(320, 240);
-        grayImage.allocate(320, 240);
-        grayBg.allocate(320, 240);
-        grayDiff.allocate(320, 240);
+        colorImg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+        grayImage.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+        grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+        grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     }
     
-    threshold = 100;
+    threshold = 180;
     bLearnBakground = false;
     backgroundSubOn = false;
     
@@ -51,7 +51,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
     kinect.isConnected() ? kinect.update() : vidGrabber.update();
     
     carrotVideo.update();
@@ -60,38 +59,24 @@ void ofApp::update(){
     parsnipVideo.update();
     saladVideo.update();
     
-    if (kinect.isFrameNew() && kinect.isConnected()){
-        
-        colorImg.setRoiFromPixels(kinect.getPixels().getData(), 640, 480);
-        grayImage = colorImg;
-        
-        if (bLearnBakground == true){
-            grayBg = grayImage;        // the = sign copys the pixels from grayImage into grayBg (operator overloading)
-            bLearnBakground = false;
-            backgroundSubOn = true;
-        }
-        
-        // take the abs value of the difference between background and incoming and then threshold:
-        backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
-        grayDiff.threshold(threshold);
-        fidfinder.findFiducials( grayDiff );
-        
-    } else if (vidGrabber.isFrameNew()){
-        
-        colorImg.setRoiFromPixels(vidGrabber.getPixels().getData(), 320, 240);
-        grayImage = colorImg;
-        
-        if (bLearnBakground == true){
-            grayBg = grayImage;        // the = sign copys the pixels from grayImage into grayBg (operator overloading)
-            bLearnBakground = false;
-            backgroundSubOn = true;
-        }
-        
-        // take the abs value of the difference between background and incoming and then threshold:
-        backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
-        grayDiff.threshold(threshold);
-        fidfinder.findFiducials( grayDiff );
+    if (kinect.isFrameNew() && kinect.isConnected()) {
+        colorImg.setRoiFromPixels(kinect.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
+    } else if (vidGrabber.isFrameNew()) {
+        colorImg.setRoiFromPixels(vidGrabber.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
     }
+    
+    grayImage = colorImg;
+    
+    if (bLearnBakground) {
+        grayBg = grayImage; // the = sign copys the pixels from grayImage into grayBg (operator overloading)
+        bLearnBakground = false;
+        backgroundSubOn = true;
+    }
+    
+    // take the abs value of the difference between background and incoming and then threshold:
+    backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
+    grayDiff.threshold(threshold);
+    fidfinder.findFiducials( grayDiff );
     
     if (muted == true) {
         bgSound.setVolume(0);
@@ -114,54 +99,43 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
-    if (debugMode && kinect.isConnected()) {
-        colorImg.draw(0,0);
-        grayDiff.draw(640,0);
-    } else if (debugMode){
-        colorImg.draw(0,0);
-        grayDiff.draw(320,0);
+    if (debugMode) {
+        colorImg.draw(0,0, colorImg.getWidth(), colorImg.getHeight());
+        grayDiff.draw(grayDiff.getWidth(),0, grayDiff.getWidth(), grayDiff.getHeight());
+        ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
     }
     
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
-        if (kinect.isConnected()) {
-            mappedFiducialXpos = ofMap(fiducial->getX(), 0, 640, 0, ofGetWidth());
-            mappedFiducialYpos = ofMap(fiducial->getY(), 0, 480, 0, ofGetHeight());
-        } else {
-            mappedFiducialXpos = ofMap(fiducial->getX(), 0, 320, 0, ofGetWidth());
-            mappedFiducialYpos = ofMap(fiducial->getY(), 0, 240, 0, ofGetHeight());
-        }
+        mappedFiducialXpos = ofMap(fiducial->getX(), 0, colorImg.getWidth(), 0, ofGetWidth());
+        mappedFiducialYpos = ofMap(fiducial->getY(), 0, colorImg.getHeight(), 0, ofGetHeight());
         
-        if (debugMode == true) {
-            fiducial->draw( 0, 0 );//draw fiducial
-            fiducial->drawCorners( 0, 0 );//draw corners
-            cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
+        if (debugMode) {
+            fiducial->draw(0, 0);//draw fiducial
+            fiducial->drawCorners(0, 0);//draw corners
+            ofLog() << "FID " << fiducial->getId() << " found at (" << fiducial->getX() << "," << fiducial->getY() << ")";
         }
         
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
-        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() > vegetableZeroPlantedTime + 5000){
-            plantSeedSound.play();
+        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000){
             vegetables.push_back(new Vegetable(carrotVideo, mappedFiducialXpos));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
-            
+            plantSeedSound.play();
         } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(leekVideo, mappedFiducialXpos));
             vegetableOnePlantedTime = ofGetElapsedTimeMillis();
-            
         } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(saladVideo, mappedFiducialXpos));
             vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
-            
         } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(radishVideo, mappedFiducialXpos));
             vegetableThreePlantedTime = ofGetElapsedTimeMillis();
-            
         } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(parsnipVideo, mappedFiducialXpos));
@@ -176,10 +150,8 @@ void ofApp::keyPressed(int key){
         bLearnBakground = true;
     } else if( key == '-' ) {
         threshold = max( 0, threshold-1 );
-        ofLog() << threshold;
     } else if( key == '+' || key == '=' ) {
         threshold = min( 255, threshold+1 );
-        ofLog() << threshold;
     } else if( key == 'b' ) {
         backgroundSubOn = false;
     } else if( key == 'd' ) {
