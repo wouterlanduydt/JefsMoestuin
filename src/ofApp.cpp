@@ -39,9 +39,10 @@ void ofApp::setup(){
     radishVideo.load("video/radish.mov");
     parsnipVideo.load("video/parsnip.mov");
     saladVideo.load("video/salad.mov");
+    groundVideo.load("video/ground.mov");
+    groundVideo.play();
     
-    ground.load("images/ground.png");
-    ground.setAnchorPoint(0, 0);
+//    ground.load("images/ground.png");
     
     plantSeedSound.load("sounds/plant-seed.mp3");
     bgSound.load("sounds/bg-sound.mp3");
@@ -58,6 +59,7 @@ void ofApp::update(){
     radishVideo.update();
     parsnipVideo.update();
     saladVideo.update();
+    groundVideo.update();
     
     if (kinect.isFrameNew() && kinect.isConnected()) {
         colorImg.setRoiFromPixels(kinect.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
@@ -91,8 +93,8 @@ void ofApp::update(){
 void ofApp::draw(){
     ofGetHours() <= 17 ? ofSetBackgroundColor(240, 247, 246) : ofSetBackgroundColor(21, 48, 36);
     
-    for (int i = 0; i < ofGetWidth(); i += ground.getWidth()) {
-        ground.draw(i, ofGetHeight() / 3);
+    for (int i = 0; i < ofGetWidth(); i += groundVideo.getWidth()) {
+        groundVideo.draw(i, ofGetHeight() / 3);
     }
     
     for (int i = 0; i < vegetables.size(); i++) {

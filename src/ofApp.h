@@ -56,6 +56,7 @@ public:
     ofVideoPlayer radishVideo;
     ofVideoPlayer saladVideo;
     ofVideoPlayer leekVideo;
+    ofVideoPlayer groundVideo;
 
     vector<Vegetable *> vegetables;
     
