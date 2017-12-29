@@ -26,7 +26,7 @@ void ofApp::setup(){
         grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     }
     
-    threshold = 180;
+    threshold = 115;
     bLearnBakground = false;
     backgroundSubOn = false;
     
@@ -74,9 +74,9 @@ void ofApp::update(){
     }
     
     // take the abs value of the difference between background and incoming and then threshold:
-    backgroundSubOn ? grayDiff.absDiff( grayBg, grayImage ) : grayDiff = grayImage;
+    backgroundSubOn ? grayDiff.absDiff(grayBg, grayImage) : grayDiff = grayImage;
     grayDiff.threshold(threshold);
-    fidfinder.findFiducials( grayDiff );
+    fidfinder.findFiducials(grayDiff);
     
     if (muted == true) {
         bgSound.setVolume(0);
@@ -100,8 +100,8 @@ void ofApp::draw(){
     }
     
     if (debugMode) {
-        colorImg.draw(0,0, colorImg.getWidth(), colorImg.getHeight());
-        grayDiff.draw(grayDiff.getWidth(),0, grayDiff.getWidth(), grayDiff.getHeight());
+        colorImg.draw(0, 0, colorImg.getWidth(), colorImg.getHeight());
+        grayDiff.draw(grayDiff.getWidth(), 0, grayDiff.getWidth(), grayDiff.getHeight());
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
     }
     
@@ -120,23 +120,23 @@ void ofApp::draw(){
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
-        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000){
+        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000) {
+            plantSeedSound.play();
             vegetables.push_back(new Vegetable(carrotVideo, mappedFiducialXpos));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
-            plantSeedSound.play();
-        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000){
+        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(leekVideo, mappedFiducialXpos));
             vegetableOnePlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000){
+        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(saladVideo, mappedFiducialXpos));
             vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000){
+        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(radishVideo, mappedFiducialXpos));
             vegetableThreePlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000){
+        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(parsnipVideo, mappedFiducialXpos));
             vegetableFourPlantedTime = ofGetElapsedTimeMillis();
