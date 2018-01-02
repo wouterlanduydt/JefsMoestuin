@@ -42,8 +42,6 @@ void ofApp::setup(){
     groundVideo.load("video/ground.mov");
     groundVideo.play();
     
-//    ground.load("images/ground.png");
-    
     plantSeedSound.load("sounds/plant-seed.mp3");
     bgSound.load("sounds/bg-sound.mp3");
     bgSound.play();
@@ -97,6 +95,13 @@ void ofApp::draw(){
         groundVideo.draw(i, ofGetHeight() / 3);
     }
     
+    if (vegetables.size() >= 40) {
+        vegetables.erase( vegetables.begin() );
+    }
+    
+    // Vegetables size bug
+    ofLog() << vegetables.size();
+    
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
     }
@@ -122,7 +127,7 @@ void ofApp::draw(){
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
-        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000) {
+        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable(carrotVideo, mappedFiducialXpos));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();

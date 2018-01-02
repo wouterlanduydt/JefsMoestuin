@@ -32,7 +32,7 @@ public:
     bool backgroundSubOn;
     bool debugMode;
     bool muted;
-    
+
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage grayDiff;
