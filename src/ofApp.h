@@ -48,15 +48,10 @@ public:
     ofImage ground;
     ofImage indicator;
     
+    ofVideoPlayer groundVideo;
+    
     ofSoundPlayer plantSeedSound;
     ofSoundPlayer bgSound;
-    
-    ofVideoPlayer carrotVideo;
-    ofVideoPlayer parsnipVideo;
-    ofVideoPlayer radishVideo;
-    ofVideoPlayer saladVideo;
-    ofVideoPlayer leekVideo;
-    ofVideoPlayer groundVideo;
 
     vector<Vegetable *> vegetables;
     

@@ -6,16 +6,19 @@
 
 class Vegetable {
 public:
-    Vegetable(ofVideoPlayer vegetableToDraw, int xPosToDraw){
-        video = vegetableToDraw;
+    Vegetable(string vegetableToDraw, int xPosToDraw){
+        video.load("videos/" + vegetableToDraw + ".mov");
+
         xPos = xPosToDraw;
         timePlanted = ofGetElapsedTimeMillis();
         growSpeed = ofRandom(.2, .3);
         scale = ofRandom(.5, 1);
     };
-    
+        
     void draw();
     void setup();
+    void update();
+    void remove();
     
     float test;
     float growSpeed;

@@ -34,11 +34,6 @@ void ofApp::setup(){
     
     indicator.load("images/indicator.png");
     
-    carrotVideo.load("videos/carrot.mov");
-    leekVideo.load("videos/leek.mov");
-    radishVideo.load("videos/radish.mov");
-    parsnipVideo.load("videos/parsnip.mov");
-    saladVideo.load("videos/salad.mov");
     groundVideo.load("videos/ground.mov");
     groundVideo.play();
     
@@ -52,12 +47,9 @@ void ofApp::setup(){
 void ofApp::update(){
     kinect.isConnected() ? kinect.update() : vidGrabber.update();
     
-    carrotVideo.update();
-    leekVideo.update();
-    radishVideo.update();
-    parsnipVideo.update();
-    saladVideo.update();
-    groundVideo.update();
+    for (int i = 0; i < vegetables.size(); i++) {
+        vegetables[i]->update();
+    }
     
     if (kinect.isFrameNew() && kinect.isConnected()) {
         colorImg.setRoiFromPixels(kinect.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
@@ -95,8 +87,9 @@ void ofApp::draw(){
         groundVideo.draw(i, ofGetHeight() / 3);
     }
     
-    if (vegetables.size() >= 40) {
-        vegetables.erase( vegetables.begin() );
+    if (vegetables.size() > 35) {
+        vegetables[0]->remove();
+        vegetables.erase(vegetables.begin());
     }
     
     // Vegetables push bug
@@ -115,8 +108,12 @@ void ofApp::draw(){
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
+
         mappedFiducialXpos = ofMap(fiducial->getX(), 0, colorImg.getWidth(), 0, ofGetWidth());
         mappedFiducialYpos = ofMap(fiducial->getY(), 0, colorImg.getHeight(), 0, ofGetHeight());
+        
+        // first fiducial might have a negative X pos first iteration - ignore it
+        if (mappedFiducialXpos < 0) { continue; }
         
         if (debugMode) {
             fiducial->draw(0, 0);//draw fiducial
@@ -129,23 +126,23 @@ void ofApp::draw(){
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000){
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(carrotVideo, mappedFiducialXpos));
+            vegetables.push_back(new Vegetable("carrot", mappedFiducialXpos));
             vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
         } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000) {
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(leekVideo, mappedFiducialXpos));
+            vegetables.push_back(new Vegetable("leek", mappedFiducialXpos));
             vegetableOnePlantedTime = ofGetElapsedTimeMillis();
         } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000) {
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(saladVideo, mappedFiducialXpos));
+            vegetables.push_back(new Vegetable("salad", mappedFiducialXpos));
             vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
         } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000) {
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(radishVideo, mappedFiducialXpos));
+            vegetables.push_back(new Vegetable("radish", mappedFiducialXpos));
             vegetableThreePlantedTime = ofGetElapsedTimeMillis();
         } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000) {
             plantSeedSound.play();
-            vegetables.push_back(new Vegetable(parsnipVideo, mappedFiducialXpos));
+            vegetables.push_back(new Vegetable("parsnip", mappedFiducialXpos));
             vegetableFourPlantedTime = ofGetElapsedTimeMillis();
         }
     }
