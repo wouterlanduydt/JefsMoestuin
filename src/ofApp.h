@@ -21,6 +21,11 @@ public:
     int mappedFiducialXpos;
     int mappedFiducialYpos;
     
+    int maxVegetablesOnScreen;
+    
+    int cloudBigPos;
+    int cloudSmallPos;
+    
     float vegetableZeroPlantedTime;
     float vegetableOnePlantedTime;
     float vegetableTwoPlantedTime;
@@ -38,14 +43,8 @@ public:
     ofxCvGrayscaleImage grayDiff;
     ofxCvColorImage colorImg;
     
-    ofImage carrotImg;
-    
-    ofImage carrot;
-    ofImage parsnip;
-    ofImage radish;
-    ofImage salad;
-    ofImage leek;
-    ofImage ground;
+    ofImage cloudBig;
+    ofImage cloudSmall;
     ofImage indicator;
     
     ofVideoPlayer groundVideo;

@@ -31,8 +31,14 @@ void ofApp::setup(){
     backgroundSubOn = false;
     
     ofSetFrameRate(24);
+    maxVegetablesOnScreen = 35;
     
     indicator.load("images/indicator.png");
+    cloudBig.load("images/cloud-big.png");
+    cloudSmall.load("images/cloud-small.png");
+    
+    cloudBigPos = ofRandom(0, ofGetWidth());
+    cloudSmallPos = ofRandom(0, ofGetWidth());
     
     groundVideo.load("videos/ground.mov");
     groundVideo.play();
@@ -46,6 +52,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     kinect.isConnected() ? kinect.update() : vidGrabber.update();
+    
+    cloudBigPos += 1;
+    cloudSmallPos -= 1;
     
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->update();
@@ -87,13 +96,10 @@ void ofApp::draw(){
         groundVideo.draw(i, ofGetHeight() / 3);
     }
     
-    if (vegetables.size() > 35) {
+    if (vegetables.size() > maxVegetablesOnScreen) {
         vegetables[0]->remove();
         vegetables.erase(vegetables.begin());
     }
-    
-    // Vegetables push bug
-    ofLog() << vegetables.size();
     
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
@@ -105,12 +111,18 @@ void ofApp::draw(){
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
     }
     
+    cloudBig.draw(cloudBigPos, -10);
+    cloudSmall.draw(cloudSmallPos, cloudBig.getHeight());
+    
+    if (cloudBigPos > ofGetWidth() ) { cloudBigPos = - cloudBig.getWidth(); }
+    if (cloudSmallPos < - cloudSmall.getWidth() ) { cloudSmallPos = ofGetWidth(); }
+    
     //use this method for the FiducialTracker
     //to get fiducial info you can use the fiducial getter methods
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
-
-        mappedFiducialXpos = ofMap(fiducial->getX(), 0, colorImg.getWidth(), 0, ofGetWidth());
-        mappedFiducialYpos = ofMap(fiducial->getY(), 0, colorImg.getHeight(), 0, ofGetHeight());
+        
+        mappedFiducialXpos = ofMap(fiducial->getX(), 0, colorImg.getWidth(), -fiducial->getRootSize(), ofGetWidth() + fiducial->getRootSize());
+        mappedFiducialYpos = ofMap(fiducial->getY(), 0, colorImg.getHeight(), -fiducial->getRootSize(), ofGetHeight() + -fiducial->getRootSize());
         
         // first fiducial might have a negative X pos first iteration - ignore it
         if (mappedFiducialXpos < 0) { continue; }
@@ -163,6 +175,10 @@ void ofApp::keyPressed(int key){
     } else if( key == 'm' ) {
         muted ? muted = false : muted = true;
     } else if ( key == 'c' ) {
+        for (int i = 0; i < vegetables.size(); i++) {
+            vegetables[i]->remove();
+            vegetables.erase(vegetables.begin() + i);
+        }
         vegetables.clear();
     }
 }
