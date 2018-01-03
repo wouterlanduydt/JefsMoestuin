@@ -34,12 +34,12 @@ void ofApp::setup(){
     
     indicator.load("images/indicator.png");
     
-    carrotVideo.load("video/carrot.mov");
-    leekVideo.load("video/leek.mov");
-    radishVideo.load("video/radish.mov");
-    parsnipVideo.load("video/parsnip.mov");
-    saladVideo.load("video/salad.mov");
-    groundVideo.load("video/ground.mov");
+    carrotVideo.load("videos/carrot.mov");
+    leekVideo.load("videos/leek.mov");
+    radishVideo.load("videos/radish.mov");
+    parsnipVideo.load("videos/parsnip.mov");
+    saladVideo.load("videos/salad.mov");
+    groundVideo.load("videos/ground.mov");
     groundVideo.play();
     
     plantSeedSound.load("sounds/plant-seed.mp3");
@@ -99,7 +99,7 @@ void ofApp::draw(){
         vegetables.erase( vegetables.begin() );
     }
     
-    // Vegetables size bug
+    // Vegetables push bug
     ofLog() << vegetables.size();
     
     for (int i = 0; i < vegetables.size(); i++) {
