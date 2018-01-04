@@ -10,9 +10,8 @@ public:
         video.load("videos/" + vegetableToDraw + ".mov");
 
         xPos = xPosToDraw;
-        timePlanted = ofGetElapsedTimeMillis();
         growSpeed = ofRandom(.2, .3);
-        scale = ofRandom(.5, 1);
+        scale = ofRandom(.7, 1);
     };
         
     void draw();
@@ -20,13 +19,11 @@ public:
     void update();
     void remove();
     
-    float test;
     float growSpeed;
     float scale;
     
     ofVideoPlayer video;
     int xPos;
-    float timePlanted;
 };
 
 #endif /* Vegetable_hpp */

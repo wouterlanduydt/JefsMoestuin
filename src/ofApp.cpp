@@ -108,6 +108,7 @@ void ofApp::draw(){
     if (debugMode) {
         colorImg.draw(0, 0, colorImg.getWidth(), colorImg.getHeight());
         grayDiff.draw(grayDiff.getWidth(), 0, grayDiff.getWidth(), grayDiff.getHeight());
+        ofDrawBitmapString("VEGETABLES ON SCREEN: " + ofToString(vegetables.size()), 10, ofGetHeight() - 40);
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
     }
     
@@ -130,7 +131,7 @@ void ofApp::draw(){
         if (debugMode) {
             fiducial->draw(0, 0);//draw fiducial
             fiducial->drawCorners(0, 0);//draw corners
-            ofLog() << "FID " << fiducial->getId() << " found at (" << fiducial->getX() << "," << fiducial->getY() << ")";
+            ofLog() << "FID " << fiducial->getId() << " found at (" << fiducial->getX() << ", " << fiducial->getY() << ")";
         }
         
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);

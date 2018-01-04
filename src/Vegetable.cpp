@@ -5,7 +5,6 @@ void Vegetable::draw() {
 }
 
 void Vegetable::update() {
-    ofLog() << "DRAW VEGETABLE: " << scale << " " << xPos;
     video.update();
     video.setAnchorPoint((video.getWidth() * scale) / 2, (video.getHeight() * scale) / 2);
     video.setSpeed(growSpeed);
