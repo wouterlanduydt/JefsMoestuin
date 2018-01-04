@@ -116,7 +116,15 @@ void ofApp::draw(){
             fiducial->drawCorners(0, 0);//draw corners
             ofLog() << "FID " << fiducial->getId() << " found at (" << fiducial->getX() << ", " << fiducial->getY() << ")";
         }
-    
+        
+        for (int j = -20; j < 20; j++) {
+            for (int i = 0; i < vegetables.size(); i++) {
+                if (vegetables[i]->xPos + j == mappedFiducialXpos) {
+                    return;
+                }
+            }
+        }
+        
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
