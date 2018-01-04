@@ -6,7 +6,6 @@
 #include "ofxFiducialFinder.h"
 #include "ofxFiducialTracker.h"
 #include "ofxOpenCv.h"
-#include "ofxKinect.h"
 
 #include "Vegetable.hpp"
 
@@ -56,7 +55,6 @@ public:
 
     vector<Vegetable *> vegetables;
     
-    ofxKinect kinect;
     ofVideoGrabber vidGrabber;
     ofxFiducialTracker fidfinder;
 };
