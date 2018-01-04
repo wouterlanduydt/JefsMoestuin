@@ -133,30 +133,30 @@ void ofApp::draw(){
             fiducial->drawCorners(0, 0);//draw corners
             ofLog() << "FID " << fiducial->getId() << " found at (" << fiducial->getX() << ", " << fiducial->getY() << ")";
         }
-        
+    
         indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
-        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime + 5000){
+        if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("carrot", mappedFiducialXpos));
-            vegetableZeroPlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime + 5000) {
+            vegetableZeroPlantedTime = ofGetElapsedTimeMillis() + 5000;
+        } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("leek", mappedFiducialXpos));
-            vegetableOnePlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime + 5000) {
+            vegetableOnePlantedTime = ofGetElapsedTimeMillis() + 5000;
+        } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("salad", mappedFiducialXpos));
-            vegetableTwoPlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime + 5000) {
+            vegetableTwoPlantedTime = ofGetElapsedTimeMillis() + 5000;
+        } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("radish", mappedFiducialXpos));
-            vegetableThreePlantedTime = ofGetElapsedTimeMillis();
-        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime + 5000) {
+            vegetableThreePlantedTime = ofGetElapsedTimeMillis() + 5000;
+        } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("parsnip", mappedFiducialXpos));
-            vegetableFourPlantedTime = ofGetElapsedTimeMillis();
+            vegetableFourPlantedTime = ofGetElapsedTimeMillis() + 5000;
         }
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+
 #include "ofxCv.h"
 #include "ofxFiducialFinder.h"
 #include "ofxFiducialTracker.h"
@@ -17,6 +18,7 @@ public:
     void draw();
     
     void keyPressed(int key);
+    void plantCarrot();
     
     int mappedFiducialXpos;
     int mappedFiducialYpos;

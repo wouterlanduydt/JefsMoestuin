@@ -2,6 +2,14 @@
 
 void Vegetable::draw() {
     video.draw(xPos, ofGetHeight() / 3, video.getWidth() * scale, video.getHeight() * scale);
+    
+    if (video.getCurrentFrame() == 50) {
+        pausedTime = ofGetElapsedTimeMillis() + 4000;
+    }
+    
+    if (ofGetElapsedTimeMillis() <= pausedTime) {
+        video.setFrame(50);
+    }
 }
 
 void Vegetable::update() {

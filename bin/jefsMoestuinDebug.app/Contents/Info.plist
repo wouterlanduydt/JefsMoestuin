@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>jefsMoestuinDebug</string>
+	<string>JefsMoestuinDebug</string>
 	<key>CFBundleIconFile</key>
 	<string>icon-debug.icns</string>
 	<key>CFBundleIdentifier</key>

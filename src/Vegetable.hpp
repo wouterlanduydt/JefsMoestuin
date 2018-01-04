@@ -24,6 +24,7 @@ public:
     
     ofVideoPlayer video;
     int xPos;
+    int pausedTime;
 };
 
 #endif /* Vegetable_hpp */
