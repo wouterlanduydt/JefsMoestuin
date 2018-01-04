@@ -1,5 +1,4 @@
 ofxCv
 ofxFiducialFinder
-ofxKinect
 ofxOpenCv
 ofxXmlSettings

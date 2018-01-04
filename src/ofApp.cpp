@@ -4,27 +4,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    kinect.init();
-    kinect.open();
-    kinect.setCameraTiltAngle(0);
-
-    if (kinect.isConnected()) {
-        ofLog() << "kinect connected";
-        
-        colorImg.allocate(kinect.getWidth(), kinect.getHeight());
-        grayImage.allocate(kinect.getWidth(), kinect.getHeight());
-        grayBg.allocate(kinect.getWidth(), kinect.getHeight());
-        grayDiff.allocate(kinect.getWidth(), kinect.getHeight());
-        
-    } else {
-        ofLog() << "kinect not connected";
-        
-        vidGrabber.initGrabber(320, 240);
-        colorImg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
-        grayImage.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
-        grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
-        grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
-    }
+    vidGrabber.listDevices().size() > 1 ? vidGrabber.setDeviceID(1) : vidGrabber.setDeviceID(0);
+    
+    vidGrabber.initGrabber(640, 480);
+    colorImg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+    grayImage.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+    grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+    grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     
     threshold = 115;
     bLearnBakground = false;
@@ -51,7 +37,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    kinect.isConnected() ? kinect.update() : vidGrabber.update();
+    vidGrabber.update();
+    groundVideo.update();
     
     cloudBigPos += 1;
     cloudSmallPos -= 1;
@@ -60,16 +47,12 @@ void ofApp::update(){
         vegetables[i]->update();
     }
     
-    if (kinect.isFrameNew() && kinect.isConnected()) {
-        colorImg.setRoiFromPixels(kinect.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
-    } else if (vidGrabber.isFrameNew()) {
-        colorImg.setRoiFromPixels(vidGrabber.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
-    }
+    colorImg.setRoiFromPixels(vidGrabber.getPixels().getData(), colorImg.getWidth(), colorImg.getHeight());
     
     grayImage = colorImg;
     
     if (bLearnBakground) {
-        grayBg = grayImage; // the = sign copys the pixels from grayImage into grayBg (operator overloading)
+        grayBg = grayImage;
         bLearnBakground = false;
         backgroundSubOn = true;
     }
@@ -105,15 +88,15 @@ void ofApp::draw(){
         vegetables[i]->draw();
     }
     
+    cloudBig.draw(cloudBigPos, -10);
+    cloudSmall.draw(cloudSmallPos, cloudBig.getHeight());
+    
     if (debugMode) {
         colorImg.draw(0, 0, colorImg.getWidth(), colorImg.getHeight());
         grayDiff.draw(grayDiff.getWidth(), 0, grayDiff.getWidth(), grayDiff.getHeight());
         ofDrawBitmapString("VEGETABLES ON SCREEN: " + ofToString(vegetables.size()), 10, ofGetHeight() - 40);
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
     }
-    
-    cloudBig.draw(cloudBigPos, -10);
-    cloudSmall.draw(cloudSmallPos, cloudBig.getHeight());
     
     if (cloudBigPos > ofGetWidth() ) { cloudBigPos = - cloudBig.getWidth(); }
     if (cloudSmallPos < - cloudSmall.getWidth() ) { cloudSmallPos = ofGetWidth(); }
