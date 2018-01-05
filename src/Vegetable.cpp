@@ -8,15 +8,14 @@ void Vegetable::update() {
 
     if (video.getCurrentFrame() == 115) {
         video.update();
-        pausedTime = ofGetElapsedTimeMillis() + (5000);
+        pausedTime = ofGetElapsedTimeMillis() + (60000 * 10);
     }
 
     if (ofGetElapsedTimeMillis() >= pausedTime && scale >= 0) {
         video.update();
         if (video.getCurrentFrame() == 116) {
-            scale-=.01;
+            scale-=.1;
         }
-        ofLog() << "playing at " << video.getCurrentFrame();
     } else if (scale <= 0) {
         video.close();
     }
