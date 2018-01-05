@@ -9,7 +9,7 @@ void Vegetable::update() {
     if (video.getCurrentFrame() == 116) {
         pausedTime = ofGetElapsedTimeMillis() + (5);
     }
-    
+
     if (ofGetElapsedTimeMillis() <= pausedTime) {
         video.setFrame(116);
     }
