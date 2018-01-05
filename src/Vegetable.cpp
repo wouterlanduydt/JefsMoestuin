@@ -6,12 +6,12 @@ void Vegetable::draw() {
 
 void Vegetable::update() {
     video.update();
-    if (video.getCurrentFrame() == 116) {
-        pausedTime = ofGetElapsedTimeMillis() + (5);
+    if (video.getCurrentFrame() == 115) {
+        pausedTime = ofGetElapsedTimeMillis() + (60000 * ofRandom(5, 10));
     }
 
     if (ofGetElapsedTimeMillis() <= pausedTime) {
-        video.setFrame(116);
+        video.setFrame(115);
     }
     video.setAnchorPoint((video.getWidth() * scale) / 2, (video.getHeight() * scale) / 2);
     video.setSpeed(growSpeed);
