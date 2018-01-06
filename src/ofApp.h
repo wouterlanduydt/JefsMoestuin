@@ -47,6 +47,7 @@ public:
     ofImage cloudBig;
     ofImage cloudSmall;
     ofImage indicator;
+    ofImage indicatorNone;
     
     ofVideoPlayer groundVideo;
     

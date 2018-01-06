@@ -20,6 +20,7 @@ void ofApp::setup(){
     maxVegetablesOnScreen = 35;
     
     indicator.load("images/indicator.png");
+    indicatorNone.load("images/indicator_none.png");
     cloudBig.load("images/cloud-big.png");
     cloudSmall.load("images/cloud-small.png");
     
@@ -86,6 +87,11 @@ void ofApp::draw(){
     
     for (int i = 0; i < vegetables.size(); i++) {
         vegetables[i]->draw();
+        
+        if (vegetables[i]->scale <= 0) {
+            vegetables[i]->remove();
+            vegetables.erase(vegetables.begin());
+        }
     }
     
     cloudBig.draw(cloudBigPos, -10);
@@ -120,6 +126,7 @@ void ofApp::draw(){
         for (int j = -20; j < 20; j++) {
             for (int i = 0; i < vegetables.size(); i++) {
                 if (vegetables[i]->xPos + j == mappedFiducialXpos) {
+                    indicatorNone.draw(mappedFiducialXpos, 10);
                     return;
                 }
             }

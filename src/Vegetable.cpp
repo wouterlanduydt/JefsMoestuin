@@ -8,7 +8,7 @@ void Vegetable::update() {
 
     if (video.getCurrentFrame() == 115) {
         video.update();
-        pausedTime = ofGetElapsedTimeMillis() + (60000 * 10);
+        pausedTime = ofGetElapsedTimeMillis() + (60000 * 1);
     }
 
     if (ofGetElapsedTimeMillis() >= pausedTime && scale >= 0) {
@@ -18,6 +18,7 @@ void Vegetable::update() {
         }
     } else if (scale <= 0) {
         video.close();
+        ofLog() << "closed";
     }
     
     video.setAnchorPoint((video.getWidth() * scale) / 2, (video.getHeight() * scale) / 2);
