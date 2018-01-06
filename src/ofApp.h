@@ -6,6 +6,7 @@
 #include "ofxFiducialFinder.h"
 #include "ofxFiducialTracker.h"
 #include "ofxOpenCv.h"
+#include "ofxXmlSettings.h"
 
 #include "Vegetable.hpp"
 
@@ -55,6 +56,8 @@ public:
     ofSoundPlayer bgSound;
 
     vector<Vegetable *> vegetables;
+    
+    ofxXmlSettings settings;
     
     ofVideoGrabber vidGrabber;
     ofxFiducialTracker fidfinder;

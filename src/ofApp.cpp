@@ -12,7 +12,8 @@ void ofApp::setup(){
     grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     
-    threshold = 115;
+    settings.loadFile("settings.xml");
+    threshold = settings.getValue("settings:threshold", 100);
     bLearnBakground = false;
     backgroundSubOn = false;
     
@@ -40,6 +41,9 @@ void ofApp::setup(){
 void ofApp::update(){
     vidGrabber.update();
     groundVideo.update();
+    
+    settings.setValue("settings:threshold", threshold);
+    settings.saveFile("settings.xml");
     
     cloudBigPos += 1;
     cloudSmallPos -= 1;
@@ -161,19 +165,19 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if( key == ' ' ) {
+    if(key == ' ') {
         bLearnBakground = true;
-    } else if( key == '-' ) {
-        threshold = max( 0, threshold-1 );
-    } else if( key == '+' || key == '=' ) {
-        threshold = min( 255, threshold+1 );
-    } else if( key == 'b' ) {
+    } else if(key == '-') {
+        threshold = max(0, threshold - 1);
+    } else if(key == '+' || key == '=') {
+        threshold = min(255, threshold + 1);
+    } else if(key == 'b') {
         backgroundSubOn = false;
-    } else if( key == 'd' ) {
+    } else if(key == 'd') {
         debugMode ? debugMode = false : debugMode = true;
-    } else if( key == 'm' ) {
+    } else if(key == 'm') {
         muted ? muted = false : muted = true;
-    } else if ( key == 'c' ) {
+    } else if (key == 'c') {
         for (int i = 0; i < vegetables.size(); i++) {
             vegetables[i]->remove();
             vegetables.erase(vegetables.begin() + i);
