@@ -12,7 +12,8 @@ void ofApp::setup(){
     grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
     
-    threshold = 115;
+    settings.loadFile("settings.xml");
+    threshold = settings.getValue("settings:threshold", 100);
     bLearnBakground = false;
     backgroundSubOn = false;
     plantDelay = 10000;
@@ -41,6 +42,9 @@ void ofApp::setup(){
 void ofApp::update(){
     vidGrabber.update();
     groundVideo.update();
+    
+    settings.setValue("settings:threshold", threshold);
+    settings.saveFile("settings.xml");
     
     cloudBigPos += 1;
     cloudSmallPos -= 1;
@@ -75,7 +79,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofGetHours() <= 17 ? ofSetBackgroundColor(240, 247, 246) : ofSetBackgroundColor(21, 48, 36);
+    ofSetBackgroundColor(240, 247, 246);
     
     for (int i = 0; i < ofGetWidth(); i += groundVideo.getWidth()) {
         groundVideo.draw(i, ofGetHeight() / 3);
@@ -103,6 +107,12 @@ void ofApp::draw(){
         grayDiff.draw(grayDiff.getWidth(), 0, grayDiff.getWidth(), grayDiff.getHeight());
         ofDrawBitmapString("VEGETABLES ON SCREEN: " + ofToString(vegetables.size()), 10, ofGetHeight() - 40);
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
+        muted ? ofDrawBitmapString("SOUND: OFF", 10, ofGetHeight() - 60) :  ofDrawBitmapString("SOUND: ON", 10, ofGetHeight() - 60);
+        
+        ofSetLineWidth(5);
+        ofSetColor(255, 0, 0);
+        ofDrawLine(20, 240, 620, 240);
+        ofSetColor(255, 255, 255);
     }
     
     if (cloudBigPos > ofGetWidth() ) { cloudBigPos = - cloudBig.getWidth(); }
@@ -162,19 +172,19 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if( key == ' ' ) {
+    if(key == ' ') {
         bLearnBakground = true;
-    } else if( key == '-' ) {
-        threshold = max( 0, threshold-1 );
-    } else if( key == '+' || key == '=' ) {
-        threshold = min( 255, threshold+1 );
-    } else if( key == 'b' ) {
+    } else if(key == '-') {
+        threshold = max(0, threshold - 1);
+    } else if(key == '+' || key == '=') {
+        threshold = min(255, threshold + 1);
+    } else if(key == 'b') {
         backgroundSubOn = false;
-    } else if( key == 'd' ) {
+    } else if(key == 'd') {
         debugMode ? debugMode = false : debugMode = true;
-    } else if( key == 'm' ) {
+    } else if(key == 'm') {
         muted ? muted = false : muted = true;
-    } else if ( key == 'c' ) {
+    } else if (key == 'c') {
         for (int i = 0; i < vegetables.size(); i++) {
             vegetables[i]->remove();
             vegetables.erase(vegetables.begin() + i);
