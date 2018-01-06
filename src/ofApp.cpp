@@ -15,6 +15,7 @@ void ofApp::setup(){
     threshold = 115;
     bLearnBakground = false;
     backgroundSubOn = false;
+    plantDelay = 10000;
     
     ofSetFrameRate(24);
     maxVegetablesOnScreen = 35;
@@ -138,23 +139,23 @@ void ofApp::draw(){
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime){
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("parsnip", mappedFiducialXpos));
-            vegetableZeroPlantedTime = ofGetElapsedTimeMillis() + 5000;
+            vegetableZeroPlantedTime = ofGetElapsedTimeMillis() + plantDelay;
         } else if (fiducial->getId() == 1 && ofGetElapsedTimeMillis() >= vegetableOnePlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("leek", mappedFiducialXpos));
-            vegetableOnePlantedTime = ofGetElapsedTimeMillis() + 5000;
+            vegetableOnePlantedTime = ofGetElapsedTimeMillis() + plantDelay;
         } else if (fiducial->getId() == 2 && ofGetElapsedTimeMillis() >= vegetableTwoPlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("salad", mappedFiducialXpos));
-            vegetableTwoPlantedTime = ofGetElapsedTimeMillis() + 5000;
+            vegetableTwoPlantedTime = ofGetElapsedTimeMillis() + plantDelay;
         } else if (fiducial->getId() == 3 && ofGetElapsedTimeMillis() >= vegetableThreePlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("carrot", mappedFiducialXpos));
-            vegetableThreePlantedTime = ofGetElapsedTimeMillis() + 5000;
+            vegetableThreePlantedTime = ofGetElapsedTimeMillis() + plantDelay;
         } else if (fiducial->getId() == 4 && ofGetElapsedTimeMillis() >= vegetableFourPlantedTime) {
             plantSeedSound.play();
             vegetables.push_back(new Vegetable("radish", mappedFiducialXpos));
-            vegetableFourPlantedTime = ofGetElapsedTimeMillis() + 5000;
+            vegetableFourPlantedTime = ofGetElapsedTimeMillis() + plantDelay;
         }
     }
 }

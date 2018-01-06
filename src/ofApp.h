@@ -24,6 +24,8 @@ public:
     
     int maxVegetablesOnScreen;
     
+    int plantDelay;
+    
     int cloudBigPos;
     int cloudSmallPos;
     
@@ -38,6 +40,7 @@ public:
     bool backgroundSubOn;
     bool debugMode;
     bool muted;
+    
 
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;

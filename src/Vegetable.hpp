@@ -10,7 +10,7 @@ public:
         video.load("videos/" + vegetableToDraw + ".mov");
 
         xPos = xPosToDraw;
-        growSpeed = ofRandom(.05, .1);
+        growSpeed = ofRandom(.04, .08);
         scale = ofRandom(.7, 1);
     };
         
