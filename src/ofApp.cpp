@@ -78,7 +78,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofGetHours() <= 17 ? ofSetBackgroundColor(240, 247, 246) : ofSetBackgroundColor(21, 48, 36);
+    ofSetBackgroundColor(240, 247, 246);
     
     for (int i = 0; i < ofGetWidth(); i += groundVideo.getWidth()) {
         groundVideo.draw(i, ofGetHeight() / 3);
@@ -106,6 +106,12 @@ void ofApp::draw(){
         grayDiff.draw(grayDiff.getWidth(), 0, grayDiff.getWidth(), grayDiff.getHeight());
         ofDrawBitmapString("VEGETABLES ON SCREEN: " + ofToString(vegetables.size()), 10, ofGetHeight() - 40);
         ofDrawBitmapString("THRESHOLD: " + ofToString(threshold), 10, ofGetHeight() - 20);
+        muted ? ofDrawBitmapString("SOUND: OFF", 10, ofGetHeight() - 60) :  ofDrawBitmapString("SOUND: ON", 10, ofGetHeight() - 60);
+        
+        ofSetLineWidth(5);
+        ofSetColor(255, 0, 0);
+        ofDrawLine(20, 240, 620, 240);
+        ofSetColor(255, 255, 255);
     }
     
     if (cloudBigPos > ofGetWidth() ) { cloudBigPos = - cloudBig.getWidth(); }
