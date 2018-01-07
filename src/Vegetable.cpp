@@ -12,7 +12,7 @@ void Vegetable::update() {
     }
 
     if (ofGetElapsedTimeMillis() >= pausedTime && scale >= 0) {
-        video.update();
+        video.update(); 
         if (video.getCurrentFrame() == 116) {
             scale-=.1;
         }
