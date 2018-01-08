@@ -22,7 +22,9 @@ void ofApp::setup(){
     maxVegetablesOnScreen = 35;
     
     indicator.load("images/indicator.png");
+    indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
     indicatorNone.load("images/indicator_none.png");
+    indicatorNone.setAnchorPoint(indicatorNone.getWidth() / 2, 0);
     cloudBig.load("images/cloud-big.png");
     cloudSmall.load("images/cloud-small.png");
     
@@ -143,7 +145,6 @@ void ofApp::draw(){
             }
         }
         
-        indicator.setAnchorPoint(indicator.getWidth() / 2, 0);
         indicator.draw(mappedFiducialXpos, 10);
         
         if (fiducial->getId() == 0 && ofGetElapsedTimeMillis() >= vegetableZeroPlantedTime){
