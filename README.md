@@ -83,4 +83,4 @@
 * Als de app traag begint te lopen omdat er teveel groenten op het scherm staan, druk je op C om de groenten te clearen.
 * Als de fiducial code niet goed word herkent, pas je eerst de treshold aan (meestal door verandering van het licht van de omgeving). Als dit niet helpt, moet je de code dichter bij de camera houden.
 * Als de achtergrond van de debug mode niet meer overeenkomt met de huidige achtergrond. Leer dan opnieuw de achtergrond dmv op de spatiebalk te drukken. Je kan ook de achtergrond volledig verwijderen door op B te drukken.
-* Als de fiducial code niet goed word herkent, pas je eerst de treshold aan (meestal door verandering van het licht van de omgeving). Als dit niet helpt, moet je de code dichter bij de camera houden.
+
