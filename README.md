@@ -30,13 +30,15 @@
 
 4. In debug mode zie je een lijn op de camera, plaats op deze lijn een lijn op de grond met plakband.
 
-5. Hou een code voor de webcam. Als de code niet goed herkent wordt open dan de debug mode, en pas de treshold aan. 
+5. Zorg dat alles juist staat opgesteld, en niets meer van plaats hoeft te veranderen onder de camera. Druk op de spatiebalk om de achtergrond te herkennen, zodat de codes beter worden herkent.
 
-6. Plaats de Macbook in de gegeven opbergruimte.
+6. Hou een code voor de webcam. Als de code niet goed herkent wordt open dan de debug mode, en pas de treshold aan. 
 
-7. Versier de tafel met het doek.
+7. Plaats de Macbook in de gegeven opbergruimte.
 
-8. Plaats de groenten op de tafel.
+8. Versier de tafel met het doek.
+
+9. Plaats de groenten op de tafel.
 
    ​
 
@@ -56,6 +58,8 @@
 * (D) = Toggle Debug-mode
   * (+) = Maak treshold donkerder
   * (-) = Maak treshold lichter 
+  * (spatie) = Leer de achtergrond
+  * (b) = verwijder de geleerde achtergrond
 
 * (M) = Toggle mute
 
@@ -76,3 +80,5 @@
 * Als er een stukje van de code is afgevallen, kan je dit corrigeren met een zwarte alcoholstift. Er zijn ook reservebolletjes meegeleverd die je met behulp van het sjabloon terug kan plakken op de juiste plaats.
 * Als de app traag begint te lopen omdat er teveel groenten op het scherm staan, druk je op C om de groenten te clearen.
 * Als de fiducial code niet goed word herkent, pas je eerst de treshold aan (meestal door verandering van het licht van de omgeving). Als dit niet helpt, moet je de code dichter bij de camera houden.
+* Als de achtergrond van de debug mode niet meer overeenkomt met de huidige achtergrond. Leer dan opnieuw de achtergrond dmv op de spatiebalk te drukken. Je kan ook de achtergrond volledig verwijderen door op B te drukken.
+
