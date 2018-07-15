@@ -1,4 +1,4 @@
-* # JEF's Moestuin
+# JEF's Moestuin
 
   ## Benodigdheden
 
